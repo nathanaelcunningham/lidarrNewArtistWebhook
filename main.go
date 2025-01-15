@@ -68,7 +68,7 @@ func (a *App) NewArtist(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !artistExists {
-		err := os.Mkdir(fmt.Sprintf("%s/%s", a.config.LibraryPath, payload.Artist.Name), 0775)
+		err := os.Mkdir(fmt.Sprintf("%s/%s", a.config.LibraryPath, payload.Artist.Name), 0777)
 		if err != nil {
 			log.Println("Error creating artist directory", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
