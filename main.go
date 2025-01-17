@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
+	"strings"
 )
 
 type App struct {
@@ -77,4 +79,13 @@ func (a *App) NewArtist(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("Artist %s Folder created", payload.Artist.Name)
+}
+
+func sanitizeFolderName(folderName string) string {
+	// Regular expression to match invalid characters
+	re := regexp.MustCompile(`[<>:."\/\\|?*]`)
+	// Replace invalid characters with an empty string
+	validCharacters := re.ReplaceAllString(folderName, "")
+	// Trim leading and trailing whitespace
+	return strings.TrimSpace(validCharacters)
 }
